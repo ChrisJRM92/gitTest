@@ -1,5 +1,0 @@
-Primera linea de codigo actualizado y modificado
-
-primer commit
-
-se elimino la segunda linea de codigo
