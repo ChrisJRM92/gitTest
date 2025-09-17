@@ -97,7 +97,14 @@ calcularValorTotal = function () {
     */
 
 }
-limpiar = function () {
+limpiar = function (arr) {
+    for(let i=0; i<arr.length; i++){
+        //console.log(i)
+        document.getElementById(arr[i]).innerText = '0.0';
+    }
+
+    document.getElementById('lblResumen').innerText = '--'
+    
     /*
         Dejar todas las cajas de texto con el valor cadena vacía, 0 ó 0.0 según el tipo de dato
         Dejar todos los textos de los montos con el valor 0.0
