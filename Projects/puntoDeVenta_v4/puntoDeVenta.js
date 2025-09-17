@@ -48,8 +48,12 @@ calcularValorTotal = function () {
         Si el caso de prueba es exitoso, hacer un commit
      */
     //8. Invocar a calcularIVA y lo que devuelve guardar en la variable valorIVA
+    let opp = valorSubtotal - valorDescuento
+    console.log(opp)
+    valorIVA = calcularIVA(opp)
     // El IVA debe calcularse sobre el valor del subtotal menos el descuento
-    //9. Mostrar el resultado en el componente lblValorIVA    
+    //9. Mostrar el resultado en el componente lblValorIVA
+    document.getElementById('lblValorIVA').innerText = valorIVA    
         /*
             Caso de prueba: 
                 - cantidad: 10 
