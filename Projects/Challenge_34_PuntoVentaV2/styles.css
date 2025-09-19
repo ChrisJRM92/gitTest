@@ -1,0 +1,123 @@
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    margin: 0px;
+    background-color: #c0c6cc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    height: 100vh;
+}
+
+.container_icon,
+.container_content,
+.container_results {
+    width: 400px;
+    height: 400px;
+    /* background-color: aqua;  */
+}
+
+.container_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container_icon {
+    background-image: url(./imagenes/logoKrakeDev.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.inputs_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    /* background-color: chocolate; */
+    height: 100%;
+}
+
+.inputs {
+    display: flex;
+    
+    height: 50px;
+    /* background-color: blueviolet; */
+    width: 300px;
+    justify-content: space-between;
+
+    h3 {
+        width: 100px;
+        text-align: end;
+        margin: 0px;
+    }
+
+    .input_container_input {
+        display: flex;
+        flex-direction: column;
+
+        input {
+            border: solid 1px green;
+
+        }
+
+        p{
+            margin: 0 0 0 30px;
+            color: crimson;
+        }
+    }
+
+
+}
+
+input {
+    margin-left: 30px;
+
+}
+
+.btn_container{
+    /* background-color: blueviolet; */
+    display: flex;
+    gap: 50px;
+}
+
+.btn {
+    height: 40px;
+    background-color: #21C453;
+    color: aliceblue;
+    border-style: none;
+    width: 140px;
+    border-radius: 8px;
+    margin: 0px;
+
+    &:hover {
+        background-color: aliceblue;
+        color: black;
+        cursor: pointer;
+    }
+}
+
+.container_results {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.results {
+    display: flex;
+    /* background-color: blue; */
+    justify-content: center;
+    width: 200px;
+
+    h3 {
+        margin: 5px;
+    }
+}
