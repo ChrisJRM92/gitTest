@@ -16,11 +16,18 @@
     />
   </head>
   <body>
-    <label for="placa">Ingresar Placa</label>
-    <input type="text" id="placa" />
-    <button onclick="validarPlaca()">Validar</button>
-    <p id="state"></p>
-    <p id="error"></p>
-    <p id="province" class="province"></p>
+    <div class="card">
+      <label for="placa">Ingresar Placa</label>
+      <input type="text" id="placa" />
+      <div class="btns">
+        <button onclick="validarPlaca()">Validar</button>
+        <button onclick="limpiar()">Limpiar</button>
+      </div>
+      <p id="state"></p>
+      <p id="error"></p>
+      <p id="province"></p>
+      <p id="type"></p>
+      <p id="picoyplaca"></p>
+    </div>
   </body>
 </html>

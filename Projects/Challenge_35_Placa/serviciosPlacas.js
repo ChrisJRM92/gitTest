@@ -1,3 +1,34 @@
+const provincias = {
+    A: 'Azuay',
+    B: 'Bolívar',
+    U: 'Cañar',
+    C: 'Carchi',
+    X: 'Cotopaxi',
+    H: 'Chimborazo',
+    O: 'El Oro',
+    E: 'Esmeraldas',
+    W: 'Galápagos',
+    G: 'Guayas',
+    I: 'Imbabura',
+    L: 'Loja',
+    R: 'Los Ríos',
+    M: 'Manabí',
+    V: 'Morona Santiago',
+    N: 'Napo',
+    S: 'Pastaza',
+    P: 'Pichincha',
+    K: 'Sucumbíos',
+    Q: 'Orellana',
+    T: 'Tungurahua',
+    Z: 'Zamora Chinchipe',
+    Y: 'Santa Elena'
+};
+
+const leters = 'BCDFGHIJKLMNÑOPQRTUVWY';
+const letersArray = [...leters]
+
+
+
 const validarEstructura = (placa) => {
     //console.log(placa)
     let valuesPlate = numberDigitsPlate(placa)
@@ -36,34 +67,46 @@ const validarEstructura = (placa) => {
     }
 }
 
-const provincias = {
-    A: 'Azuay',
-    B: 'Bolívar',
-    U: 'Cañar',
-    C: 'Carchi',
-    X: 'Cotopaxi',
-    H: 'Chimborazo',
-    O: 'El Oro',
-    E: 'Esmeraldas',
-    W: 'Galápagos',
-    G: 'Guayas',
-    I: 'Imbabura',
-    L: 'Loja',
-    R: 'Los Ríos',
-    M: 'Manabí',
-    V: 'Morona Santiago',
-    N: 'Napo',
-    S: 'Pastaza',
-    P: 'Pichincha',
-    K: 'Sucumbíos',
-    Q: 'Orellana',
-    T: 'Tungurahua',
-    Z: 'Zamora Chinchipe',
-    Y: 'Santa Elena'
-};
+
 
 const obtenerProvincia = (placa) => {
     return provincias[placa.charAt(0)] || null
-
-
 }
+
+const obtenerTipoVehiculo = (placa) => {
+    const chart_2 = placa.charAt(1);
+    if (chart_2 == 'A' || chart_2 == 'Z'){
+        return 'Vehiculo comercial'
+    }else if(chart_2 == 'E'){
+        return 'Vehiculo gubernamental';
+    }else if(chart_2 == 'X'){
+        return ' Vehiculo de uso oficial';
+    }else if(chart_2 == 'S'){
+        return 'Vehiculo de gobierno provincial';
+    }else if(chart_2 == 'M'){
+        return  'Vehiculo municipal';
+    }else if(letersArray.includes(chart_2)){
+        return 'Vehiculo particular'
+    }else{
+        return null
+    }
+}
+
+const obtenerDiaPicoYPlaca =(placa) =>{
+    const endChart = placa.charAt(placa.length-1)
+    console.log(typeof endChart)
+    if(endChart == '1' || endChart == '2'){
+        return 'Lunes'
+    }else if(endChart == '3' || endChart == '4'){
+        return 'Martes'
+    }else if(endChart == '5' || endChart == '6'){
+        return 'Miercoles'
+    }else if(endChart == '7' || endChart == '8'){
+        return 'Jueves'
+    }else if(endChart == '9' || endChart == '0'){
+        return 'viernes'
+    }
+        
+}
+
+console.log(obtenerDiaPicoYPlaca('ICK-0147'))

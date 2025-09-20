@@ -87,7 +87,13 @@ button:hover {
     font-size: 16px;
 }
 
-.province {
+#province, #type, #picoyplaca {
     font-size: 20px;
     font-weight: 700;
+}
+
+.btns{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
 }
