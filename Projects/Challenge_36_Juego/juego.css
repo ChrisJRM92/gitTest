@@ -13,7 +13,6 @@ body {
     height: 100vh;
 }
 
-/* Contenedor principal */
 .global_container {
     display: flex;
     flex-direction: row;
@@ -22,7 +21,7 @@ body {
     align-items: flex-start;
 }
 
-/* Cards */
+
 .container_selected,
 .container_score,
 .container_img_IA {
@@ -37,14 +36,13 @@ body {
     padding: 20px;
 }
 
-/* Encabezados */
+
 h1, h2 {
-    color: #1a73e8; /* azul tipo Google */
+    color: #1a73e8;
     text-align: center;
     margin: 10px 0;
 }
 
-/* Botones de selección */
 .container_selected button {
     background: none;
     border: none;
@@ -61,7 +59,6 @@ h1, h2 {
     transform: scale(1.1);
 }
 
-/* Imagen IA centrada */
 .container_img_IA img {
     margin-top: auto;
     margin-bottom: auto;
