@@ -29,5 +29,21 @@ const guardarPalabra = (inputWord) => {
     return error
 }
 
+const mostrarLetra = (letra, posicion) =>{
+    if(posicion == 0){
+        console.log('div0')
+    }else if(posicion == 1){
+        console.log('div1')
+    }else if(posicion == 2){
+        console.log('div2')
+    }else if(posicion == 3){
+        console.log('div3')
+    }else if(posicion == 4){
+        console.log('div4')
+    }else{
+        console.log('div5')
+    }
+}
+
 console.log(guardarPalabra('PALAB'))
 console.log('La palabra es: '+palabraSecreta)
