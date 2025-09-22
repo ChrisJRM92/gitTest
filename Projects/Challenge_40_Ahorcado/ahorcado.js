@@ -1,6 +1,7 @@
 let palabraSecreta = '';
 let intentos = 0;
 let coincidencias = 0;
+let errores = 0;
 
 const esMayuscula = (caracter) => {
     if (caracter.charCodeAt(0) >= 65 && caracter.charCodeAt(0) <= 90) {
@@ -62,7 +63,12 @@ const validar = (letra) => {
             mostrarLetra(letra, i)
         }
     }
-    console.log(letrasEncontradas)
+    if(!palabraSecreta.includes(letra)){
+        alert('La letra '+letra+' no es parte de la palabra')
+        errores++
+    }
+    
+    
 }
 
 const ingresarLetra = () => {
@@ -71,13 +77,43 @@ const ingresarLetra = () => {
     document
     //console.log(letra)
     validar(letra)
-    if(intentos == 5){
+    mostrarAhorcado()
+    console.log(intentos)
+    console.log(errores)
+    if(intentos == 10){
         alert('Haz perdido')
     }
 
-    if(coincidencias == 10){
+    if(coincidencias == 5){
         alert('Felicidades haz ganado!')
+        document.getElementById('ahorcadoImagen').src = './images/ganador.gif'
     }
 }
 
+const mostrarAhorcado = () => {
+    if(errores == 1){
+        document.getElementById('ahorcadoImagen').src = './images/Ahorcado_01.png';
+    }else if(errores == 2){
+        document.getElementById('ahorcadoImagen').src = './images/Ahorcado_02.png';
+    }else if(errores == 3){
+        document.getElementById('ahorcadoImagen').src = './images/Ahorcado_03.png';
+    }else if(errores == 4){
+        document.getElementById('ahorcadoImagen').src = './images/Ahorcado_04.png';
+    }else if(errores == 5){
+        document.getElementById('ahorcadoImagen').src = './images/Ahorcado_05.png';
+    }else if(errores == 6){
+        document.getElementById('ahorcadoImagen').src = './images/Ahorcado_06.png';
+    }else if(errores == 7){
+        document.getElementById('ahorcadoImagen').src = './images/Ahorcado_07.png';
+    }else if(errores == 8){
+        document.getElementById('ahorcadoImagen').src = './images/Ahorcado_08.png';
+    }else if(errores == 9){
+        document.getElementById('ahorcadoImagen').src = './images/Ahorcado_09.png';
+    }else if(errores == 10){
+        document.getElementById('ahorcadoImagen').src = './images/Ahorcado_09.png';
+    }
 
+    if(intentos == 10){
+        document.getElementById('ahorcadoImagen').src = './images/gameOver.gif';
+    }
+}
