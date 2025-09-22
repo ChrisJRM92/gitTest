@@ -1,4 +1,6 @@
-let palabraSecreta = ''
+let palabraSecreta = '';
+let intentos = 0;
+let coincidencias = 0;
 
 const esMayuscula = (caracter) => {
     if (caracter.charCodeAt(0) >= 65 && caracter.charCodeAt(0) <= 90) {
@@ -56,6 +58,7 @@ const validar = (letra) => {
         //console.log(i)
         if (letra == palabraSecreta[i]) {
             letrasEncontradas++
+            coincidencias++
             mostrarLetra(letra, i)
         }
     }
@@ -64,6 +67,17 @@ const validar = (letra) => {
 
 const ingresarLetra = () => {
     const letra = (document.getElementById('txtLetra').value).toUpperCase();
-    console.log(letra)
+    intentos++
+    document
+    //console.log(letra)
     validar(letra)
+    if(intentos == 5){
+        alert('Haz perdido')
+    }
+
+    if(coincidencias == 10){
+        alert('Felicidades haz ganado!')
+    }
 }
+
+
