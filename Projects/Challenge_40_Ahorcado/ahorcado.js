@@ -8,42 +8,62 @@ const esMayuscula = (caracter) => {
     };
 };
 
-const guardarPalabra = (inputWord) => {
-    //const inputWord = document.getElementById('txtSecreta').value
-    let validation = false;
+const guardarPalabra = () => {
+    const inputWord = document.getElementById('txtSecreta').value
+    let validation = true;
     let error = ''
     if (inputWord.length == 5) {
         for (let i = 0; i < inputWord.length; i++) {
             //console.log(esMayuscula(inputWord[i]))
-            if(esMayuscula(inputWord[i])){
-                validation = true
-            }else{
-                error = 'Todos los caracteres deben ser en mayuscula'
+            if (!esMayuscula(inputWord[i])) {
+                validation = false
+                alert('Todos los caracteres deben ser en mayuscula')
                 break
             }
         }
-    }else{
-        error = 'La plabra no tiene 5 caracteres'
+    } else {
+        validation = false;
+        alert('La palabra debe contener 5 caracteres')
     }
-
-    return error
-}
-
-const mostrarLetra = (letra, posicion) =>{
-    if(posicion == 0){
-        console.log('div0')
-    }else if(posicion == 1){
-        console.log('div1')
-    }else if(posicion == 2){
-        console.log('div2')
-    }else if(posicion == 3){
-        console.log('div3')
-    }else if(posicion == 4){
-        console.log('div4')
-    }else{
-        console.log('div5')
+    if (validation) {
+        palabraSecreta = inputWord
+        document.getElementById('testWord').innerText = palabraSecreta
     }
 }
 
-console.log(guardarPalabra('PALAB'))
-console.log('La palabra es: '+palabraSecreta)
+const mostrarLetra = (letra, posicion) => {
+    //console.log('----------------')
+    //console.log(letra, posicion)
+
+    if (posicion == 0) {
+        document.getElementById('div0').innerText = letra
+    } else if (posicion == 1) {
+        document.getElementById('div1').innerText = letra
+    } else if (posicion == 2) {
+        document.getElementById('div2').innerText = letra
+    } else if (posicion == 3) {
+        document.getElementById('div3').innerText = letra
+    } else if (posicion == 4) {
+        document.getElementById('div4').innerText = letra
+    } else {
+        document.getElementById('div5').innerText = letra
+    }
+}
+
+const validar = (letra) => {
+    let letrasEncontradas = 0
+    for (let i = 0; i < palabraSecreta.length; i++) {
+        //console.log(i)
+        if (letra == palabraSecreta[i]) {
+            letrasEncontradas++
+            mostrarLetra(letra, i)
+        }
+    }
+    console.log(letrasEncontradas)
+}
+
+const ingresarLetra = () => {
+    const letra = (document.getElementById('txtLetra').value).toUpperCase();
+    console.log(letra)
+    validar(letra)
+}

@@ -3,6 +3,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="ahorcado.css">
+    <script src="./ahorcado.js"></script>
 </head>
 
 <body>
@@ -11,11 +12,13 @@
         <div class="containerLefth">
             <h3>JUEGO DEL AHORACADO</h3>
             <div>Ingresa una palabra de 5 letras</div>
+            <div>Palabra prueba: </div>
+            <div id="testWord"></div>
             <input type="password" id="txtSecreta" />
-            <input type="button" id="btnGuardar" value="GUARDAR"/>
+            <input type="button" id="btnGuardar" onclick="guardarPalabra()" value="GUARDAR"/>
             <div>Ingresa una letra:</div>
             <input type="text" id="txtLetra">
-            <input type="button" id="btnValidar" value="VALIDAR"/>
+            <input type="button" id="btnValidar" onclick="ingresarLetra()" value="VALIDAR"/>
             <br/>
              <div>
                 <div id="div0"> </div>
