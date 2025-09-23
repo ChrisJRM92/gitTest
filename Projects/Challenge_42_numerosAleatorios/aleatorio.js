@@ -3,9 +3,6 @@ const randomNumber = () => {
     return numberRandom; 
 }
 
-
-
-
 const generarAleatorios = () => {
     let aleatorios = [];
     let inputUseNumber = document.getElementById('userNumber').value;
