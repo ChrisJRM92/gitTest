@@ -28,5 +28,51 @@ const buscarCliente = () => {
 }
 
 const mostrarCliente = () => {
-    document.getElementById('tabla').innerHTML = render;
+    let tabla = '<table border="1" cellspacing="0"><tr>'+
+    '<th>Cedula</th>'+
+    '<th>Nombre</th>'+
+    '<th>Edad</th>'+
+    '</tr>';
+    let elemento;
+    for(let i=0; i<clientes.length; i++){
+        elemento = clientes[i]
+        tabla+=
+        '<tr><td>'+elemento.cedula+'</td>'+
+        '<td>'+elemento.nombre+'</td>'+
+        '<td>'+elemento.edad+'</td>'+
+        '</tr>'
+    }
+    tabla+='</table>'
+    document.getElementById('tabla').innerHTML = tabla
 }
+
+const addClient = () =>{
+    const cedula = document.getElementById('cedula').value;
+    const nombre = document.getElementById('nombre').value;
+    const edad = document.getElementById('edad').value
+    clientes.push({nombre: nombre, cedula: cedula, edad: edad})
+}
+
+const saveData = () => {
+    const cedula = document.getElementById('cedula').value;
+    const nombre = document.getElementById('nombre').value;
+    const edad = document.getElementById('edad').value;
+
+    let actualizado = false;
+
+    for (let i = 0; i < clientes.length; i++) {
+        if (clientes[i].cedula == cedula) {
+            clientes[i].nombre = nombre;
+            clientes[i].edad = edad;
+            actualizado = true;
+            break;
+        }
+    }
+
+    if (actualizado) {
+        alert('Datos actualizados');
+        mostrarCliente(); 
+    } else {
+        alert('No se encontro el cliente');
+    }
+};
