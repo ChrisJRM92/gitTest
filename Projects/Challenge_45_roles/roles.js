@@ -55,3 +55,50 @@ const ejecutarNuevo = () =>{
     habilitarComponente('btnGuardar');
     esNuevo = true;
 }
+
+const buscarEmpleado = (cedula) =>{
+    for(let i=0; i<empleados.length; i++){
+        let encontrado;
+        if(empleados[i].cedula == cedula){
+            return empleados[i]
+        }
+        
+    }
+    return null
+}
+
+const agregarEmpleado = (empleado) =>{
+    const data = buscarEmpleado(empleado.cedula);
+    if(!data){
+        empleados.push(empleado)
+        console.log(empleados)
+        return true
+    }else{
+        return false
+    }
+}
+
+const guardar = () =>{
+    const cedula = recuperarTexto('txtCedula')
+    const nombre = recuperarTexto('txtNombre').toUpperCase()
+    const apellido = recuperarTexto('txtApellido').toUpperCase()
+    const sueldo = parseFloat(recuperarTexto('txtSueldo'))
+    let alerta;
+
+    if((cedula.length == 10) && nombre && apellido && sueldo){
+        const empleado = {
+            cedula: cedula,
+            nombre: nombre,
+            apellido: apellido,
+            sueldo: sueldo
+        };
+        alerta = agregarEmpleado(empleado);
+    }
+
+    if(alerta){
+        alert('Empleado guardado correctamente')
+        mostrarEmpleado()
+    }else{
+        alerta('Ya existe un empleado con la cedula: '+cedula)
+    }
+}
