@@ -170,14 +170,22 @@ const calcularValorAPagar = (sueldo, iess, descuento) => {
 }
 
 const calcularRol = () => {
-    const sueldo = recuperarTextoDiv('infoSueldo')
-    const descuento = recuperarFloat('txtDescuentos')
-    if ((typeof descuento == 'number' && !Number.isInteger(descuento)) && descuento >= 0 && descuento <= sueldo) {
-        console.log('entro?')
-        const iess = calcularAporteEmpleado(sueldo)
-        mostrarTexto('infoIESS', iess)
+    const empleadoEncontrado = recuperarTextoDiv('infoCedula');
+    //console.log(empleadoEncontrado)
+    if (empleadoEncontrado == '') {
+        alert('Ingresar empleado')
     } else {
-        console.log('No es flotante');
+        const sueldo = recuperarTextoDiv('infoSueldo')
+        const descuento = recuperarFloat('txtDescuentos')
+        if ((typeof descuento == 'number' && !Number.isInteger(descuento)) && descuento >= 0 && descuento <= sueldo) {
+            //console.log('entro?')
+            const iess = calcularAporteEmpleado(sueldo)
+            mostrarTexto('infoIESS', iess)
+        } else {
+            alert('Descuento no valido')
+        }
+
     }
+
 }
 
