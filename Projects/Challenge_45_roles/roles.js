@@ -97,18 +97,34 @@ const guardar = () => {
             sueldo: sueldo
         };
         alerta = agregarEmpleado(empleado);
+        if (alerta) {
+            alert('Empleado guardado correctamente')
+            mostrarEmpleado();
+            deshabilitarOpciones();
+            esNuevo = false;
+        }else{
+            for(let i=0; i<empleados.length; i++){
+                if(empleados[i].cedula == cedula){
+                    empleados[i] = empleado
+                    alert('Empleado modificado exitosamente')
+                    mostrarEmpleado();
+                    limpiar ();
+                    break;
+                }
+                
+            }
+        }
     } else {
+        console.log(alerta)
         alert('Todos los campos son obligatorios')
     }
 
-    if (alerta) {
-        alert('Empleado guardado correctamente')
-        mostrarEmpleado()
-        deshabilitarOpciones()
 
-    } else {
-        alert('Ya existe un empleado con la cedula: ' + cedula)
-    }
+
+
+
+
+
 }
 
 const ejecutarBusqueda = () => {
@@ -127,5 +143,14 @@ const ejecutarBusqueda = () => {
         habilitarComponente('txtApellido');
         habilitarComponente('txtSueldo');
 
+        habilitarComponente('btnGuardar');
     }
+}
+
+const limpiar = () => {
+    mostrarTextoEnCaja('txtCedula', '');
+    mostrarTextoEnCaja('txtNombre', '');
+    mostrarTextoEnCaja('txtApellido', '');
+    mostrarTextoEnCaja('txtSueldo', '');
+    deshabilitarOpciones()
 }
