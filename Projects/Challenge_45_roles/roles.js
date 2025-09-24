@@ -97,7 +97,7 @@ const guardar = () => {
             sueldo: sueldo
         };
         alerta = agregarEmpleado(empleado);
-    }else{
+    } else {
         alert('Todos los campos son obligatorios')
     }
 
@@ -108,5 +108,24 @@ const guardar = () => {
 
     } else {
         alert('Ya existe un empleado con la cedula: ' + cedula)
+    }
+}
+
+const ejecutarBusqueda = () => {
+    const cedula = recuperarTexto('txtBusquedaCedula');
+    const empleado = buscarEmpleado(cedula);
+    if (!empleado) {
+        alert('Empleado no encontrado')
+    } else {
+        mostrarTextoEnCaja('txtCedula', empleado.cedula);
+        mostrarTextoEnCaja('txtNombre', empleado.nombre);
+        mostrarTextoEnCaja('txtApellido', empleado.apellido);
+        mostrarTextoEnCaja('txtSueldo', empleado.sueldo);
+
+        deshabilitarComponente('txtCedula');
+        habilitarComponente('txtNombre');
+        habilitarComponente('txtApellido');
+        habilitarComponente('txtSueldo');
+
     }
 }
