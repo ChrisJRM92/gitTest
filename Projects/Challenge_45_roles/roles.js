@@ -97,6 +97,8 @@ const guardar = () => {
             sueldo: sueldo
         };
         alerta = agregarEmpleado(empleado);
+    }else{
+        alert('Todos los campos son obligatorios')
     }
 
     if (alerta) {
