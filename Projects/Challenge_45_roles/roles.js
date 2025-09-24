@@ -101,16 +101,16 @@ const guardar = () => {
             mostrarEmpleado();
             deshabilitarOpciones();
             esNuevo = false;
-        }else{
-            for(let i=0; i<empleados.length; i++){
-                if(empleados[i].cedula == cedula){
+        } else {
+            for (let i = 0; i < empleados.length; i++) {
+                if (empleados[i].cedula == cedula) {
                     empleados[i] = empleado
                     alert('Empleado modificado exitosamente')
                     mostrarEmpleado();
-                    limpiar ();
+                    limpiar();
                     break;
                 }
-                
+
             }
         }
     } else {
@@ -148,16 +148,35 @@ const limpiar = () => {
 }
 
 // Rol section------------------------------------
-const buscarPorRol = () =>{
-    const cedula= recuperarTexto('txtBusquedaCedulaRol')
+const buscarPorRol = () => {
+    const cedula = recuperarTexto('txtBusquedaCedulaRol')
     const empleado = buscarEmpleado(cedula)
 
-    if(empleado){
+    if (empleado) {
         mostrarTexto('infoCedula', empleado.cedula)
         mostrarTexto('infoNombre', empleado.nombre)
         mostrarTexto('infoSueldo', empleado.sueldo)
-    }else{
+    } else {
         alert('El empleado no existe')
     }
 }
 
+const calcularAporteEmpleado = (sueldo) => {
+    return (sueldo * 9.45) / 100
+}
+
+const calcularValorAPagar = (sueldo, iess, descuento) => {
+    return sueldo - iess - descuento
+}
+
+const calcularRol = () => {
+    const sueldo = recuperarTextoDiv('infoSueldo')
+    const descuento = recuperarFloat('txtDescuentos')
+    if ((typeof descuento == 'number' && !Number.isInteger(descuento)) && descuento >= 0 && descuento <= sueldo) {
+        console.log('entro?')
+        const iess = calcularAporteEmpleado(sueldo)
+        mostrarTexto('infoIESS', iess)
+    } else {
+        console.log('No es flotante');
+    }
+}

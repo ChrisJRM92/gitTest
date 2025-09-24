@@ -9,6 +9,27 @@ mostrarTexto = function (idComponente, mensaje) {
     componente = document.getElementById(idComponente);
     componente.innerText = mensaje;
 }
+
+recuperarTextoDiv = function (idComponente) {
+    let componente;
+    let valorIngresado;
+    componente = document.getElementById(idComponente);
+    valorIngresado = componente.textContent;
+    return valorIngresado;
+}
+
+recuperarFloatDiv = function (idComponente) {
+    let valorCaja = recuperarTextoDiv(idComponente);
+    let valorFlotante = parseFloat(valorCaja);
+    return valorFlotante;
+}
+
+recuperarIntDiv = function (idComponente) {
+    let valorCaja = recuperarTextoDiv(idComponente);
+    let valorEntero = parseInt(valorCaja);
+    return valorEntero;
+}
+
 mostrarTextoEnCaja = function (idComponente, mensaje) {
     let componente;
     componente = document.getElementById(idComponente);
