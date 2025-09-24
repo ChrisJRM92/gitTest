@@ -4,6 +4,8 @@ let empleados = [
     { cedula: "0705933588", nombre: "Christian", apellido: "Romero", sueldo: 800.0 }
 ]
 
+let roles = [];
+
 let esNuevo = false;
 
 const deshabilitarOpciones = () => {
@@ -26,12 +28,16 @@ const mostrarOpcionRol = () => {
     ocultarComponente('divEmpleado');
     mostrarComponente('divRol');
     ocultarComponente('divResumen');
+    deshabilitarComponente('btnGuardarRol');
+    
 }
 
 const mostrarOpcionResume = () => {
     ocultarComponente('divEmpleado');
     ocultarComponente('divRol');
     mostrarComponente('divResumen');
+    monstrarRol()
+    mostrarTotales()
 }
 
 const mostrarEmpleado = () => {
@@ -62,7 +68,6 @@ const ejecutarNuevo = () => {
 
 const buscarEmpleado = (cedula) => {
     for (let i = 0; i < empleados.length; i++) {
-        let encontrado;
         if (empleados[i].cedula == cedula) {
             return empleados[i]
         }
@@ -177,10 +182,14 @@ const calcularRol = () => {
     } else {
         const sueldo = recuperarTextoDiv('infoSueldo')
         const descuento = recuperarFloat('txtDescuentos')
+        //console.log(descuento)
         if ((typeof descuento == 'number' && !Number.isInteger(descuento)) && descuento >= 0 && descuento <= sueldo) {
             //console.log('entro?')
             const iess = calcularAporteEmpleado(sueldo)
             mostrarTexto('infoIESS', iess)
+            habilitarComponente('btnGuardarRol');
+            const total = calcularValorAPagar(sueldo, iess, descuento).toFixed(2);
+            mostrarTexto('infoPago', total)
         } else {
             alert('Descuento no valido')
         }
@@ -189,3 +198,109 @@ const calcularRol = () => {
 
 }
 
+const buscarRol = (cedula) => {
+    console.log(roles.length)
+    for (let i = 0; i < roles.length; i++) {
+        if (cedula == roles[i].cedula) {
+            console.log('encontrado?')
+            return rol
+        } else {
+            return null
+        }
+    }
+}
+
+const calcularAporteEmpleador = (sueldo) => {
+    return (sueldo * 11.15) / 100
+}
+
+const guardarRol = () => {
+    const cedula = recuperarTextoDiv('infoCedula');
+    const nombre = recuperarTextoDiv('infoNombre');
+    const sueldo = parseFloat(recuperarTextoDiv('infoSueldo'));
+    const aporteEmpleado = parseFloat(recuperarTextoDiv('infoIESS'));
+    const totalAPagar = parseFloat(recuperarTextoDiv('infoPago'));
+    const aporteEmpleador = calcularAporteEmpleador(sueldo);
+
+    let existe = false;
+
+    for (let i = 0; i < roles.length; i++) {
+        if (roles[i].cedula === cedula) {
+            existe = true;
+            break;
+        }
+    }
+
+    if (existe) {
+        alert('El rol ya existe');
+    } else {
+        const nuevoRol = {
+            cedula,
+            nombre,
+            sueldo,
+            valorAPagar: totalAPagar,
+            aporteEmpleado,
+            aporteEmpleador,
+        };
+
+        roles.push(nuevoRol);
+        deshabilitarComponente('btnGuardarRol');
+        alert('Rol guardado correctamente');
+        
+
+    }
+
+    console.log(roles);
+};
+
+
+//Mostrar rol RESUMEN ---------------------------------------------------------
+
+const monstrarRol = () =>{
+    let tabla = '<table><tr><th>Cedula</th><th>Nombre</th><th>Valor_a_pagar</th><th>Aporte empleado</th><th>Aporte empleador</th></tr>';
+    let elemento;
+    for (let i = 0; i < roles.length; i++) {
+        elemento = roles[i];
+        tabla +=
+            '<tr>' +
+            '<td>' + elemento.cedula + '</td>' +
+            '<td>' + elemento.nombre + '</td>' +
+            '<td>' + elemento.valorAPagar + '</td>' +
+            '<td>' + elemento.aporteEmpleado + '</td>' +
+            '<td>' + elemento.aporteEmpleador + '</td>' +
+            '</tr>'
+    }
+    tabla += '</table>'
+    document.getElementById('tablaResumen').innerHTML = tabla;
+}
+
+const mostrarTotales = () =>{
+    let totalAPagar = 0.0;
+    let totalEmpleador = 0.0;
+    let totalEmpleao = 0.0;
+    let existe = false
+    let totalNomina = 0.0
+    
+    if(roles){
+        existe = true
+        
+    }else{
+        alert('No existe un rol registrado')
+    }
+
+    if(existe){
+        for(let i=0; i<roles.length; i++){
+            totalAPagar += parseFloat(roles[i].valorAPagar);
+            totalEmpleador += parseFloat(roles[i].aporteEmpleado);
+            totalEmpleao += parseFloat(roles[i].aporteEmpleador);
+        }
+    }
+
+    mostrarTexto('infoTotalPago', totalAPagar.toFixed(2));
+    mostrarTexto('infoAporteEmpleado', totalEmpleador.toFixed(2));
+    mostrarTexto('infoAporteEmpresa', totalEmpleao.toFixed(2));
+
+    totalNomina = parseFloat(totalAPagar+totalEmpleador+totalEmpleador)
+    mostrarTexto('infoTotalNomina', totalNomina.toFixed(2));
+
+}
