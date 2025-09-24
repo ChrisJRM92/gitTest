@@ -180,3 +180,4 @@ const calcularRol = () => {
         console.log('No es flotante');
     }
 }
+
