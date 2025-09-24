@@ -4,8 +4,15 @@ let empleados = [
     { cedula: "0705933588", nombre: "Christian", apellido: "Romero", sueldo: 800.0 }
 ]
 
+let esNuevo = false;
+
 const mostrarOpcionEmpleado = () => {
-    mostrarEmpleado()
+    mostrarEmpleado();
+    deshabilitarComponente('txtCedula');
+    deshabilitarComponente('txtNombre');
+    deshabilitarComponente('txtApellido');
+    deshabilitarComponente('txtSueldo');
+    deshabilitarComponente('btnGuardar');
     mostrarComponente('divEmpleado');
     ocultarComponente('divRol');
     ocultarComponente('divResumen');
@@ -38,4 +45,13 @@ const mostrarEmpleado = () =>{
     }
     tabla+='</table>'
     document.getElementById('tablaEmpleados').innerHTML = tabla;
+}
+
+const ejecutarNuevo = () =>{
+    habilitarComponente('txtCedula');
+    habilitarComponente('txtNombre');
+    habilitarComponente('txtApellido');
+    habilitarComponente('txtSueldo');
+    habilitarComponente('btnGuardar');
+    esNuevo = true;
 }
