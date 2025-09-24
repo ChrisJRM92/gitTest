@@ -114,7 +114,7 @@ const guardar = () => {
             }
         }
     } else {
-        console.log(alerta)
+        //console.log(alerta)
         alert('Todos los campos son obligatorios')
     }
 }
@@ -146,3 +146,18 @@ const limpiar = () => {
     mostrarTextoEnCaja('txtSueldo', '');
     deshabilitarOpciones()
 }
+
+// Rol section------------------------------------
+const buscarPorRol = () =>{
+    const cedula= recuperarTexto('txtBusquedaCedulaRol')
+    const empleado = buscarEmpleado(cedula)
+
+    if(empleado){
+        mostrarTexto('infoCedula', empleado.cedula)
+        mostrarTexto('infoNombre', empleado.nombre)
+        mostrarTexto('infoSueldo', empleado.sueldo)
+    }else{
+        alert('El empleado no existe')
+    }
+}
+
