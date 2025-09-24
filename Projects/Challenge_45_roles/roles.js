@@ -105,6 +105,6 @@ const guardar = () => {
         deshabilitarOpciones()
 
     } else {
-        alerta('Ya existe un empleado con la cedula: ' + cedula)
+        alert('Ya existe un empleado con la cedula: ' + cedula)
     }
 }
