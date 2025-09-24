@@ -66,7 +66,6 @@ const buscarEmpleado = (cedula) => {
         if (empleados[i].cedula == cedula) {
             return empleados[i]
         }
-
     }
     return null
 }
@@ -118,13 +117,6 @@ const guardar = () => {
         console.log(alerta)
         alert('Todos los campos son obligatorios')
     }
-
-
-
-
-
-
-
 }
 
 const ejecutarBusqueda = () => {
