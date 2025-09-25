@@ -3,43 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Formulario y Tabla</title>
+    <title>Registro usuarios</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="./utilitarios.js"></script>
     <script src="./orden.js"></script>
   </head>
-  <body>
+  <body onload="crearUsuarioTabla()">
     <div class="container">
       <!-- Inputs -->
        <h1>Registro de usuarios</h1>
       <div class="inputs">
-        <input type="text" placeholder="Nombre" id="name" />
-        <input type="text" placeholder="Edad" id="age" />
+        <div>
+            <input type="text" placeholder="Nombre" id="name" />
+            <p class="error" id="error_name"></p>
+        </div>
+        <div>
+            <input type="text" placeholder="Edad" id="age" />
+            <p class="error" id="error_age"></p>
+        </div>
         <button onclick="registrarUsuario()">Agregar</button>
       </div>
 
       <!-- Tabla -->
-      <table>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Edad</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Juan</td>
-            <td>25</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>María</td>
-            <td>30</td>
-          </tr>
-        </tbody>
-      </table>
+      <div id="tablaUsuarios">
+
+      </div>
 
       <!-- Botones -->
       <div class="actions">
