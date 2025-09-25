@@ -1,5 +1,11 @@
-let usuarios = [];
-let id = 0;
+let usuarios = [
+    {id: 0, name: 'Marcos', age: 18},
+    {id: 1, name: 'Roberto', age: 15},
+    {id: 2, name: 'Kate', age: 25},
+    {id: 3, name: 'Diana', age: 12},
+    {id: 4, name: 'Benja', age: 5}
+];
+let id = 5;
 const errors = [{
     error_length: '*Almenos 3 caracteres',
     error_empy: '*El campo es obligatorio',
@@ -63,6 +69,7 @@ const registrarUsuario = () => {
             age: age
         })
         console.log(usuarios)
+        crearUsuarioTabla()
 
     }
 }
@@ -77,4 +84,32 @@ const crearUsuarioTabla = () =>{
     }
     tabla+='</tr></tbody></table>'
     document.getElementById('tablaUsuarios').innerHTML = tabla;
+}
+
+const buscarMayor = () =>{
+    let personaMayor;
+    
+    for(let i=0; i<usuarios.length; i++){
+        let personaActual = usuarios[0].age
+        if(personaActual < usuarios[i].age){
+            personaActual = usuarios[i]
+            personaMayor = personaActual
+        }
+    }
+    alert('La persona mayor es: '+personaMayor.name+' con '+personaMayor.age+' años.')
+    //console.log(personaMayor)
+}
+
+const buscarMenor = () =>{
+    let personaMenor;
+    
+    for(let i=0; i<usuarios.length; i++){
+        let personaActual = usuarios[0].age
+        if(personaActual > usuarios[i].age){
+            personaActual = usuarios[i]
+            personaMenor = personaActual
+        }
+    }
+    alert('La persona menor es: '+personaMenor.name+' con '+personaMenor.age+' años.')
+    //console.log(personaMayor)
 }
