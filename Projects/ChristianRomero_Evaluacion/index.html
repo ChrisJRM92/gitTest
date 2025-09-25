@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario y Tabla</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="./utilitarios.js"></script>
+    <script src="./orden.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Inputs -->
+       <h1>Registro de usuarios</h1>
+      <div class="inputs">
+        <input type="text" placeholder="Nombre" id="name" />
+        <input type="text" placeholder="Edad" id="age" />
+        <button onclick="registrarUsuario()">Agregar</button>
+      </div>
+
+      <!-- Tabla -->
+      <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Edad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Juan</td>
+            <td>25</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>María</td>
+            <td>30</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Botones -->
+      <div class="actions">
+        <button>Calcular Mayor</button>
+        <button>Calcular Menor</button>
+        <!-- <button>Guardar</button> -->
+      </div>
+    </div>
+  </body>
+</html>
