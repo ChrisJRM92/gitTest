@@ -41,11 +41,14 @@
           <h3>Agregar producto</h3>
           <label for="">Nombre</label>
           <input type="text" id="nombreN" />
-          <p style="margin: 0; color: rgb(255, 69, 69);" id="errorEmpyName">* No puede quedar vacio</p>
+          <p style="margin: 0; color: rgb(255, 69, 69);" id="errorEmpyName">* El nombre no puede quedar vacio</p>
           <p style="margin: 0; color: rgb(255, 69, 69);" id="errorOnlyChar">* Se permiten solo letras</p>
-          <p style="margin: 0; color: rgb(255, 69, 69);" id="errorUpperName">* Primera letra debe ser mayuscula</p>
+          <p style="margin: 0; color: rgb(255, 69, 69);" id="errorUpperName">* La primera letra debe ser mayuscula</p>
           <label for="">Descripcion</label>
           <input type="text" id="descripcionN" />
+          <p style="margin: 0; color: rgb(255, 69, 69);" id="errorEmpyDesc">* La descripcion no puede quedar vacio</p>
+          <p style="margin: 0; color: rgb(255, 69, 69);" id="errorOnlyCharDesc">* Se permiten solo letras</p>
+          <p style="margin: 0; color: rgb(255, 69, 69);" id="errorUpperDesc">* La primera letra debe ser mayuscula</p>
           <label for="">Categoria</label>
           <select
             style="width: 100%; height: 30px"
@@ -53,9 +56,11 @@
             id="categoriaN"
           ></select>
           <label for="">Precio</label>
-          <input type="text" id="precioN" />
+          <input type="number" id="precioN" min="0" step="any" />
+          <p style="margin: 0; color: rgb(255, 69, 69);" id="errorEmpyPrice">* El precio no puede quedar vacio</p>
           <label for="">Stock</label>
-          <input type="text" id="stockN" />
+          <input type="number" id="stockN" min="0" step="1" />
+          <p style="margin: 0; color: rgb(255, 69, 69);" id="errorEmpyStock">* El stock no puede quedar vacio</p>
           <button onclick="handleCloseModal()">Cerrar</button>
           <button onclick="saveNewProduct()">Guardar</button>
         </dialog>

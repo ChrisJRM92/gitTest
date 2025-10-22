@@ -1,5 +1,7 @@
 // Lista base de productos
 let globalIdProducts = 0;
+let productSelected = 0;
+
 let productos = [
   {
     id: 1,
@@ -59,7 +61,7 @@ const ventas = [
   },
 ];
 
-
+//Tabla y acciones de productos
 const cargarProductos = () => {
   document.getElementById("tableBody").innerHTML = productos.map(n => `
     <tr>
@@ -82,9 +84,178 @@ const cargarProductos = () => {
 
   totalBodega()
 }
+//Listar categorias
+const listCategories = () => {
+  document.getElementById("categoria").innerHTML = categorias.map(c => `
+      <optgroup label='${c.descripcion}' id="labelOptGroup">
+        <option value='${c.nombre}' id="valueOption">${c.nombre}</option>
+      </optgroup>
 
-let productSelected = 0;
+      `)
+  document.getElementById("categoriaN").innerHTML = categorias.map(c => `
+      <optgroup label='${c.descripcion}' id="labelOptGroup">
+        <option value='${c.nombre}' id="valueOption">${c.nombre}</option>
+      </optgroup>
 
+      `)
+}
+
+//CRUD
+//-----------Leer productos-----------------
+const totalBodega = () => {
+  let totalProdutos = 0;
+  let totalStock = 0;
+  let valorTotalInventario = 0;
+  for (let i = 0; i < productos.length; i++) {
+    totalProdutos = i + 1;
+    totalStock += parseInt(productos[i].stock);
+    valorTotalInventario += parseFloat(productos[i].precio * productos[i].stock)
+  }
+  document.getElementById("totalProductos").innerText = totalProdutos;
+  document.getElementById("stockTotal").innerText = totalStock;
+  document.getElementById("valorInventario").innerText = valorTotalInventario;
+}
+//------------------------------------------
+
+//-----------------Modal crear producto------
+const handleOpenModalProduct = () => {
+  console.log("Agregar producto")
+  document.getElementById("addProductModal").showModal();
+  document.getElementById("errorEmpyName").style.display = "none";
+  document.getElementById("errorUpperName").style.display = "none";
+  document.getElementById("errorOnlyChar").style.display = "none";
+
+  document.getElementById("errorEmpyDesc").style.display = "none";
+  document.getElementById("errorUpperDesc").style.display = "none";
+  document.getElementById("errorOnlyCharDesc").style.display = "none";
+
+  document.getElementById("errorEmpyPrice").style.display = "none";
+
+  document.getElementById("errorEmpyStock").style.display = "none";
+  listCategories();
+}
+const saveNewProduct = () => {
+  let arr = {};
+  let id;
+  let nombre;
+  let descripcion;
+  let categoria;
+  let precio;
+  let stock;
+
+  let nameIsCorrect = false;
+  let descriptionIsCorrect = false;
+  let priceIsCorrect = false;
+  let stockIsCorrect = false;
+
+  nombre = document.getElementById("nombreN").value;
+  descripcion = document.getElementById("descripcionN").value;
+  categoria = document.getElementById("categoriaN").value;
+  precio = document.getElementById("precioN").value;
+  stock = document.getElementById("stockN").value;
+  id = productos[productos.length - 1].id + 1;
+
+  //console.log(nombre[0].charCodeAt())
+  nameIsCorrect = existValue(nombre);
+  descriptionIsCorrect = existValue(descripcion);
+  priceIsCorrect = existValue(precio);
+  stockIsCorrect = existValue(stock);
+
+  //Validacion nombre
+  if(!nameIsCorrect){
+    document.getElementById("errorEmpyName").style.display = "block";
+    document.getElementById("errorUpperName").style.display = "block";
+    document.getElementById("errorOnlyChar").style.display = "block";
+
+  }else{
+    document.getElementById("errorEmpyName").style.display = "none"
+    nameIsCorrect = isUpperCase(nombre);
+    if(nameIsCorrect){
+      document.getElementById("errorUpperName").style.display = "none"
+      nameIsCorrect = noEspecialChar(nombre);
+      if(nameIsCorrect){
+        document.getElementById("errorOnlyChar").style.display = "none"
+      }else{
+        document.getElementById("errorOnlyChar").style.display = "block"
+      }
+    }else{
+      document.getElementById("errorUpperName").style.display = "block"
+    }
+  }
+
+
+  //Validacion descripcion
+  if(!descriptionIsCorrect){
+    document.getElementById("errorEmpyDesc").style.display = "block";
+    document.getElementById("errorUpperDesc").style.display = "block";
+    document.getElementById("errorOnlyCharDesc").style.display = "block";
+
+  }else{
+    document.getElementById("errorEmpyDesc").style.display = "none"
+    descriptionIsCorrect = isUpperCase(descripcion);
+    if(descriptionIsCorrect){
+      document.getElementById("errorUpperDesc").style.display = "none"
+      descriptionIsCorrect = noEspecialChar(descripcion);
+      if(descriptionIsCorrect){
+        document.getElementById("errorOnlyCharDesc").style.display = "none"
+      }else{
+        document.getElementById("errorOnlyCharDesc").style.display = "block"
+      }
+    }else{
+      document.getElementById("errorUpperDesc").style.display = "block"
+    }
+  }
+
+  //Validacion price
+  if(!priceIsCorrect){
+    document.getElementById("errorEmpyPrice").style.display = "block";
+
+  }else{
+    document.getElementById("errorEmpyPrice").style.display = "none";
+  }
+
+   if(!stockIsCorrect){
+    document.getElementById("errorEmpyStock").style.display = "block";
+
+  }else{
+    document.getElementById("errorEmpyStock").style.display = "none";
+  }
+
+  if (nameIsCorrect && descriptionIsCorrect && priceIsCorrect && stockIsCorrect) {
+    arr =
+    {
+      id: id,
+      nombre: nombre.trim(),
+      descripcion: descripcion.trim(),
+      categoria: categoria,
+      precio: precio,
+      stock: stock,
+    }
+    saveDataProduct(arr);
+  }
+}
+const saveDataProduct = (arr) => {
+  productos.push(arr);
+  cargarProductos();
+  document.getElementById("addProductModal").close();
+  document.getElementById("nombreN").value = "";
+  document.getElementById("descripcionN").value = "";
+  document.getElementById("categoriaN").value = "";
+  document.getElementById("precioN").value = "";
+  document.getElementById("stockN").value = "";
+}
+const handleCloseModal = () => {
+  document.getElementById("addProductModal").close();
+  document.getElementById("nombreN").value = "";
+  document.getElementById("descripcionN").value = "";
+  document.getElementById("categoriaN").value = "";
+  document.getElementById("precioN").value = "";
+  document.getElementById("stockN").value = "";
+}
+//-------------------------------------------
+
+
+//----------Modal actualizar productos------
 const openModalChanges = (product) => {
   console.log(product)
   document.getElementById("modalChangeData").showModal();
@@ -97,11 +268,9 @@ const openModalChanges = (product) => {
   productSelected = product.id;
   listCategories()
 }
-
-const closeModalEdit =() =>{
+const closeModalEdit = () => {
   document.getElementById("modalChangeData").close();
 }
-
 const saveDataModalProduct = () => {
   console.log(productSelected)
   for (let i = 0; i < productos.length; i++) {
@@ -118,122 +287,10 @@ const saveDataModalProduct = () => {
     }
   }
 }
+//-------------------------------------------
 
-const listCategories = () => {
-  document.getElementById("categoria").innerHTML = categorias.map(c => `
-      <optgroup label='${c.descripcion}' id="labelOptGroup">
-        <option value='${c.nombre}' id="valueOption">${c.nombre}</option>
-      </optgroup>
 
-      `)
-  document.getElementById("categoriaN").innerHTML = categorias.map(c => `
-      <optgroup label='${c.descripcion}' id="labelOptGroup">
-        <option value='${c.nombre}' id="valueOption">${c.nombre}</option>
-      </optgroup>
-
-      `)
-}
-
-const totalBodega = () =>{
-  let totalProdutos = 0;
-  let totalStock = 0;
-  let valorTotalInventario = 0;
-  for(let i=0; i<productos.length; i++){
-    totalProdutos = i+1;
-    totalStock += parseInt(productos[i].stock);
-    valorTotalInventario += parseFloat(productos[i].precio*productos[i].stock)
-  }
-  document.getElementById("totalProductos").innerText = totalProdutos;
-  document.getElementById("stockTotal").innerText = totalStock;
-  document.getElementById("valorInventario").innerText = valorTotalInventario;
-}
-
-const handleOpenModalProduct = () =>{
-  console.log("Agregar producto")
-  document.getElementById("addProductModal").showModal();
-  document.getElementById("errorEmpyName").style.display = "none";
-  document.getElementById("errorUpperName").style.display = "none";
-  document.getElementById("errorOnlyChar").style.display = "none";
-  listCategories();
-}
-
-const saveNewProduct = () =>{
-  let arr = {};
-  let id;
-  let nombre;
-  let descripcion;
-  let categoria;
-  let precio;
-  let stock;
-
-  let nameIsCorrect = false;
-  
-  nombre = document.getElementById("nombreN").value;
-  descripcion = document.getElementById("descripcionN").value;
-  categoria = document.getElementById("categoriaN").value;
-  precio = document.getElementById("precioN").value;
-  stock = document.getElementById("stockN").value;
-  id = productos[productos.length-1].id+1;
-
-  //console.log(nombre[0].charCodeAt())
-
-  if(!nombre){
-    document.getElementById("errorEmpyName").style.display = "block";
-  }else{
-    document.getElementById("errorEmpyName").style.display = "none";
-    if(nombre[0].charCodeAt() >= 65 && nombre[0].charCodeAt() <=90){
-      console.log("Paso primera mayuscula")
-      for(let i=0; i<nombre.length; i++){
-        if((nombre[i].charCodeAt() >= 65 && nombre[i].charCodeAt() <= 90) || (nombre[i].charCodeAt() >= 97 && nombre[i].charCodeAt() <= 122)){
-          nameIsCorrect = true;
-          console.log(nameIsCorrect);
-        }else{
-          nameIsCorrect = false;
-          document.getElementById("errorOnlyChar").style.display = "block";
-          console.log(nameIsCorrect);
-          break
-        }
-      }
-    }else{
-      document.getElementById("errorUpperName").style.display = "block";
-    }
-    
-  }
-
-  if(nameIsCorrect){
-    arr = 
-    {
-      id: id,
-      nombre: nombre,
-      descripcion: descripcion,
-      categoria: categoria,
-      precio: precio,
-      stock: stock,
-    }
-    saveDataProduct(arr);
-  }
-}
-
-const saveDataProduct = (arr) =>{
-  productos.push(arr);
-  cargarProductos();
-  document.getElementById("addProductModal").close();
-  document.getElementById("nombreN").value = "";
-  document.getElementById("descripcionN").value = "";
-  document.getElementById("categoriaN").value = "";
-  document.getElementById("precioN").value = "";
-  document.getElementById("stockN").value = "";
-}
-
-const handleCloseModal = () =>{
-  document.getElementById("addProductModal").close();
-  document.getElementById("nombreN").value = "";
-  document.getElementById("descripcionN").value = "";
-  document.getElementById("categoriaN").value = "";
-  document.getElementById("precioN").value = "";
-  document.getElementById("stockN").value = "";
-}
-
+//------------Modal eliminar producto--------
 const openModalDelete = (product) => {
   console.log(product)
   document.getElementById("modalDeleteProduct").showModal();
@@ -245,15 +302,45 @@ const openModalDelete = (product) => {
   document.getElementById("stockDP").value = product.stock;
   productSelected = product.id;
 }
-
-const handleDeleteProduct = () =>{
+const handleDeleteProduct = () => {
   console.log(productSelected)
-  let newData = productos.filter(p => p.id!==productSelected);
+  let newData = productos.filter(p => p.id !== productSelected);
   productos = newData;
   cargarProductos();
   console.log(newData);
+  closeModaleDeleteProduct()
 }
-
-const closeModaleDeleteProduct = () =>{
+const closeModaleDeleteProduct = () => {
   document.getElementById("modalDeleteProduct").close();
 }
+//-------------------------------------------
+
+
+//----------Funciones reutilizables----------
+const existValue = (value) => {
+  if (value) {
+    return true;
+  } else {
+    return false;
+  }
+}
+const isUpperCase = (value) => {
+  if (value[0].charCodeAt() >= 65 && value[0].charCodeAt() <= 90) {
+    return true;
+  } else {
+    return false;
+  }
+}
+const noEspecialChar = (value) => {
+  let isCorrect = false;
+  for (let i = 0; i < value.length; i++) {
+    if ((value[i].charCodeAt() >= 65 && value[i].charCodeAt() <= 90) || (value[i].charCodeAt() >= 97 && value[i].charCodeAt() <= 122) || (value[i].charCodeAt() == 32)) {
+      isCorrect = true;
+    } else {
+      isCorrect = false;
+      break
+    }
+  }
+  return isCorrect;
+}
+//------------------------------------------
