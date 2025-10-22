@@ -8,7 +8,7 @@
     <script src="scripts.js"></script>
   </head>
 
-  <body onload="mostrarSeccion('seccion1'); cargarProductos();">
+  <body onload="mostrarSeccion('seccion1'); cargarProductos(); getCategories();">
     <!-- Logos fijos a los lados -->
     <!-- <img src="./imagenes/logo.png" alt="Logo Izquierdo" id="logo-izquierdo" /> -->
     <!-- <img src="./imagenes/logo.png" alt="Logo Derecho" id="logo-derecho" /> -->
@@ -165,18 +165,21 @@
       </div>
     </div>
 
-    <!-- Sección 2: Gestión de categorías -->
-    <!-- Sección 2: Gestión de categorías -->
-    <!-- Sección 2: Gestión de categorías -->
-    <!-- Sección 2: Gestión de categorías -->
+
     <!-- Sección 2: Gestión de categorías -->
     <div id="seccion2" class="seccion" style="display: none">
       <div class="contenido-seccion">
-        <h2>Gestión de Categorías (Reto Grupal)</h2>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h2>Gestión de Categorías</h2>
+          <button style="width: 150px; height: 40px;" onclick="handleOpenModalCategory()">Agregar categoria</button>
+        </div>
+        
 
-        <div class="campo">
-          <label for="nombreCategoria">Nombre Categoría:</label>
-          <input type="text" id="nombreCategoria" placeholder="Ej: Ropa" />
+        <dialog id="modalAddCategory" closedby="any">
+          <h3>Agregar Categoria</h3>
+          <div class="campo">
+            <label for="nombreCategoria">Nombre Categoría:</label>
+            <input type="text" id="nombreCategoria" placeholder="Ej: Ropa" />
           <div class="error" id="errorNombreCategoria">......</div>
         </div>
 
@@ -192,14 +195,25 @@
         </div>
 
         <div class="campo">
-          <button type="button" onclick="agregarCategoria()">
-            Agregar Categoría
-          </button>
+          <button type="button" onclick="handleCloseModalCategory()">Cerrar</button>
+          <button type="button" onclick="agregarCategoria()">Añadir</button>
         </div>
+        </dialog>
+          <h3>Categorías Registradas</h3>
 
-        <h3>Categorías Registradas</h3>
         <ul id="listaCategorias">
-          <!-- Categorías aparecerán aquí -->
+          <table>
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody id="dataBodyCategory">
+            </tbody>
+          </table>
         </ul>
       </div>
     </div>

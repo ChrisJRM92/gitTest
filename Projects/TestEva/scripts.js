@@ -446,3 +446,27 @@ const noEspecialChar = (value) => {
 //------------------------------------------
 
 //*****************************************************************
+//------------Nueva categoria ---------------
+const handleOpenModalCategory = () =>{
+  document.getElementById("modalAddCategory").showModal();
+}
+
+const handleCloseModalCategory = () =>{
+  document.getElementById("modalAddCategory").close();
+}
+//-------------------------------------------
+
+//-------------Listar categorias-------------
+const getCategories = () =>{
+  document.getElementById("dataBodyCategory").innerHTML = categorias.map(c => `
+    <tr>
+      <td>1</td>
+      <td>Ropa</td>
+      <td>Descripcion corta</td>
+      <td style="display: flex; gap: 5px; justify-content: center;">
+        <button style="width: 100px;" onclick="">Editar</button>
+        <button style="width: 100px;" onclick="">Eliminar</button>
+      </td>
+    </tr>
+    `).join(" ")
+}
