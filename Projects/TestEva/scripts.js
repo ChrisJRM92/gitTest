@@ -162,62 +162,62 @@ const saveNewProduct = () => {
   stockIsCorrect = existValue(stock);
 
   //Validacion nombre
-  if(!nameIsCorrect){
+  if (!nameIsCorrect) {
     document.getElementById("errorEmpyName").style.display = "block";
     document.getElementById("errorUpperName").style.display = "block";
     document.getElementById("errorOnlyChar").style.display = "block";
 
-  }else{
+  } else {
     document.getElementById("errorEmpyName").style.display = "none"
     nameIsCorrect = isUpperCase(nombre);
-    if(nameIsCorrect){
+    if (nameIsCorrect) {
       document.getElementById("errorUpperName").style.display = "none"
       nameIsCorrect = noEspecialChar(nombre);
-      if(nameIsCorrect){
+      if (nameIsCorrect) {
         document.getElementById("errorOnlyChar").style.display = "none"
-      }else{
+      } else {
         document.getElementById("errorOnlyChar").style.display = "block"
       }
-    }else{
+    } else {
       document.getElementById("errorUpperName").style.display = "block"
     }
   }
 
 
   //Validacion descripcion
-  if(!descriptionIsCorrect){
+  if (!descriptionIsCorrect) {
     document.getElementById("errorEmpyDesc").style.display = "block";
     document.getElementById("errorUpperDesc").style.display = "block";
     document.getElementById("errorOnlyCharDesc").style.display = "block";
 
-  }else{
+  } else {
     document.getElementById("errorEmpyDesc").style.display = "none"
     descriptionIsCorrect = isUpperCase(descripcion);
-    if(descriptionIsCorrect){
+    if (descriptionIsCorrect) {
       document.getElementById("errorUpperDesc").style.display = "none"
       descriptionIsCorrect = noEspecialChar(descripcion);
-      if(descriptionIsCorrect){
+      if (descriptionIsCorrect) {
         document.getElementById("errorOnlyCharDesc").style.display = "none"
-      }else{
+      } else {
         document.getElementById("errorOnlyCharDesc").style.display = "block"
       }
-    }else{
+    } else {
       document.getElementById("errorUpperDesc").style.display = "block"
     }
   }
 
   //Validacion price
-  if(!priceIsCorrect){
+  if (!priceIsCorrect) {
     document.getElementById("errorEmpyPrice").style.display = "block";
 
-  }else{
+  } else {
     document.getElementById("errorEmpyPrice").style.display = "none";
   }
 
-   if(!stockIsCorrect){
+  if (!stockIsCorrect) {
     document.getElementById("errorEmpyStock").style.display = "block";
 
-  }else{
+  } else {
     document.getElementById("errorEmpyStock").style.display = "none";
   }
 
@@ -258,6 +258,20 @@ const handleCloseModal = () => {
 //----------Modal actualizar productos------
 const openModalChanges = (product) => {
   console.log(product)
+
+  document.getElementById("errorEmpyNameEdit").style.display = "none";
+  document.getElementById("errorUpperNameEdit").style.display = "none";
+  document.getElementById("errorOnlyCharEdit").style.display = "none";
+
+  document.getElementById("errorEmpyDescEdit").style.display = "none";
+  document.getElementById("errorUpperDescEdit").style.display = "none";
+  document.getElementById("errorOnlyCharDescEdit").style.display = "none";
+
+  document.getElementById("errorEmpyPriceEdit").style.display = "none";
+
+  document.getElementById("errorEmpyStockEdit").style.display = "none";
+
+  //--------------------
   document.getElementById("modalChangeData").showModal();
   document.getElementById("id").value = product.id;
   document.getElementById("nombre").value = product.nombre;
@@ -273,19 +287,98 @@ const closeModalEdit = () => {
 }
 const saveDataModalProduct = () => {
   console.log(productSelected)
-  for (let i = 0; i < productos.length; i++) {
-    if (productos[i].id == productSelected) {
-      console.log("Encontrado")
-      productos[i].nombre = document.getElementById("nombre").value;
-      productos[i].descripcion = document.getElementById("descripcion").value;
-      productos[i].categoria = document.getElementById("categoria").value;
-      productos[i].precio = document.getElementById("precio").value;
-      productos[i].stock = document.getElementById("stock").value;
-      cargarProductos();
-      document.getElementById("modalChangeData").close();
-      break
+  let nameIsCorrect = false;
+  let descriptionIsCorrect = false;
+  let priceIsCorrect = false;
+  let stockIsCorrect = false;
+
+  const nombre = document.getElementById("nombre").value;
+  const descripcion = document.getElementById("descripcion").value;
+  const precio = document.getElementById("precio").value;
+  const stock = document.getElementById("stock").value;
+
+  nameIsCorrect = existValue(nombre);
+  descriptionIsCorrect = existValue(descripcion);
+  priceIsCorrect = existValue(precio);
+  stockIsCorrect = existValue(stock);
+
+
+  //Validacion nombre
+  if (!nameIsCorrect) {
+    document.getElementById("errorEmpyNameEdit").style.display = "block";
+    document.getElementById("errorUpperNameEdit").style.display = "block";
+    document.getElementById("errorOnlyCharEdit").style.display = "block";
+
+  } else {
+    document.getElementById("errorEmpyNameEdit").style.display = "none"
+    nameIsCorrect = isUpperCase(nombre);
+    if (nameIsCorrect) {
+      document.getElementById("errorUpperNameEdit").style.display = "none"
+      nameIsCorrect = noEspecialChar(nombre);
+      if (nameIsCorrect) {
+        document.getElementById("errorOnlyCharEdit").style.display = "none"
+      } else {
+        document.getElementById("errorOnlyCharEdit").style.display = "block"
+      }
+    } else {
+      document.getElementById("errorUpperNameEdit").style.display = "block"
     }
   }
+
+
+  //Validacion descripcion
+  if (!descriptionIsCorrect) {
+    document.getElementById("errorEmpyDescEdit").style.display = "block";
+    document.getElementById("errorUpperDescEdit").style.display = "block";
+    document.getElementById("errorOnlyCharDescEdit").style.display = "block";
+
+  } else {
+    document.getElementById("errorEmpyDescEdit").style.display = "none"
+    descriptionIsCorrect = isUpperCase(descripcion);
+    if (descriptionIsCorrect) {
+      document.getElementById("errorUpperDescEdit").style.display = "none"
+      descriptionIsCorrect = noEspecialChar(descripcion);
+      if (descriptionIsCorrect) {
+        document.getElementById("errorOnlyCharDescEdit").style.display = "none"
+      } else {
+        document.getElementById("errorOnlyCharDescEdit").style.display = "block"
+      }
+    } else {
+      document.getElementById("errorUpperDescEdit").style.display = "block"
+    }
+  }
+
+  //Validacion price
+  if (!priceIsCorrect) {
+    document.getElementById("errorEmpyPriceEdit").style.display = "block";
+
+  } else {
+    document.getElementById("errorEmpyPriceEdit").style.display = "none";
+  }
+
+  if (!stockIsCorrect) {
+    document.getElementById("errorEmpyStockEdit").style.display = "block";
+
+  } else {
+    document.getElementById("errorEmpyStockEdit").style.display = "none";
+  }
+
+  if (nameIsCorrect && descriptionIsCorrect && priceIsCorrect && stockIsCorrect) {
+    for (let i = 0; i < productos.length; i++) {
+      if (productos[i].id == productSelected) {
+        console.log("Encontrado")
+        productos[i].nombre = document.getElementById("nombre").value;
+        productos[i].descripcion = document.getElementById("descripcion").value;
+        productos[i].categoria = document.getElementById("categoria").value;
+        productos[i].precio = document.getElementById("precio").value;
+        productos[i].stock = document.getElementById("stock").value;
+        cargarProductos();
+        document.getElementById("modalChangeData").close();
+        break
+      }
+    }
+  }
+
 }
 //-------------------------------------------
 
@@ -334,7 +427,14 @@ const isUpperCase = (value) => {
 const noEspecialChar = (value) => {
   let isCorrect = false;
   for (let i = 0; i < value.length; i++) {
-    if ((value[i].charCodeAt() >= 65 && value[i].charCodeAt() <= 90) || (value[i].charCodeAt() >= 97 && value[i].charCodeAt() <= 122) || (value[i].charCodeAt() == 32)) {
+    if ((value[i].charCodeAt() >= 65 && value[i].charCodeAt() <= 90) || 
+    (value[i].charCodeAt() >= 97 && value[i].charCodeAt() <= 122) || 
+    (value[i].charCodeAt() == 32) || 
+    (value[i].charCodeAt() == 225) ||
+    (value[i].charCodeAt() == 233) ||
+    (value[i].charCodeAt() == 237) ||
+    (value[i].charCodeAt() == 243) ||
+    (value[i].charCodeAt() == 250)){
       isCorrect = true;
     } else {
       isCorrect = false;
@@ -344,3 +444,5 @@ const noEspecialChar = (value) => {
   return isCorrect;
 }
 //------------------------------------------
+
+//*****************************************************************
