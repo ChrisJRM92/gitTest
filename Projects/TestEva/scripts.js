@@ -153,7 +153,7 @@ const saveNewProduct = () => {
   categoria = document.getElementById("categoriaN").value;
   precio = document.getElementById("precioN").value;
   stock = document.getElementById("stockN").value;
-  id = productos[productos.length - 1].id + 1;
+  id = (productos.length == 0 ? 1 : productos[productos.length - 1].id + 1);
 
   //console.log(nombre[0].charCodeAt())
   nameIsCorrect = existValue(nombre);
