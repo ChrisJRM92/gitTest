@@ -427,14 +427,14 @@ const isUpperCase = (value) => {
 const noEspecialChar = (value) => {
   let isCorrect = false;
   for (let i = 0; i < value.length; i++) {
-    if ((value[i].charCodeAt() >= 65 && value[i].charCodeAt() <= 90) || 
-    (value[i].charCodeAt() >= 97 && value[i].charCodeAt() <= 122) || 
-    (value[i].charCodeAt() == 32) || 
-    (value[i].charCodeAt() == 225) ||
-    (value[i].charCodeAt() == 233) ||
-    (value[i].charCodeAt() == 237) ||
-    (value[i].charCodeAt() == 243) ||
-    (value[i].charCodeAt() == 250)){
+    if ((value[i].charCodeAt() >= 65 && value[i].charCodeAt() <= 90) ||
+      (value[i].charCodeAt() >= 97 && value[i].charCodeAt() <= 122) ||
+      (value[i].charCodeAt() == 32) ||
+      (value[i].charCodeAt() == 225) ||
+      (value[i].charCodeAt() == 233) ||
+      (value[i].charCodeAt() == 237) ||
+      (value[i].charCodeAt() == 243) ||
+      (value[i].charCodeAt() == 250)) {
       isCorrect = true;
     } else {
       isCorrect = false;
@@ -447,26 +447,108 @@ const noEspecialChar = (value) => {
 
 //*****************************************************************
 //------------Nueva categoria ---------------
-const handleOpenModalCategory = () =>{
+const handleOpenModalCategory = () => {
   document.getElementById("modalAddCategory").showModal();
-}
+  document.getElementById("errorEmpyNameCategory").style.display = "none";
+  document.getElementById("errorUpperNameCategory").style.display = "none";
+  document.getElementById("errorOnlyCharCategory").style.display = "none";
 
-const handleCloseModalCategory = () =>{
+  document.getElementById("errorEmpyDescCategory").style.display = "none";
+  document.getElementById("errorUpperDescCategory").style.display = "none";
+  document.getElementById("errorOnlyCharDescCategory").style.display = "none";
+}
+const handleCloseModalCategory = () => {
   document.getElementById("modalAddCategory").close();
+  document.getElementById("nombreCategoria").value = "";
+  document.getElementById("descripcionCategoria").value = "";
+
 }
 //-------------------------------------------
 
 //-------------Listar categorias-------------
-const getCategories = () =>{
+const getCategories = () => {
   document.getElementById("dataBodyCategory").innerHTML = categorias.map(c => `
     <tr>
-      <td>1</td>
-      <td>Ropa</td>
-      <td>Descripcion corta</td>
+      <td>${c.id}</td>
+      <td>${c.nombre}</td>
+      <td>${c.descripcion}</td>
       <td style="display: flex; gap: 5px; justify-content: center;">
-        <button style="width: 100px;" onclick="">Editar</button>
-        <button style="width: 100px;" onclick="">Eliminar</button>
+        <button style="width: 100px;" onclick=''>Editar</button>
+        <button style="width: 100px;" onclick=''>Eliminar</button>
       </td>
     </tr>
     `).join(" ")
 }
+const handleAddCategory = () => {
+  let arr = {};
+  let id;
+  let nombre;
+  let descripcion;
+
+  let nameIsCorrect = false;
+  let descriptionIsCorrect = false;
+
+  nombre = document.getElementById("nombreCategoria").value;
+  descripcion = document.getElementById("descripcionCategoria").value;
+  id = (productos.length == 0 ? 1 : productos[productos.length - 1].id);
+
+  //console.log(nombre[0].charCodeAt())
+  nameIsCorrect = existValue(nombre);
+  descriptionIsCorrect = existValue(descripcion);
+
+  if (!nameIsCorrect) {
+    document.getElementById("errorEmpyNameCategory").style.display = "block";
+    document.getElementById("errorUpperNameCategory").style.display = "block";
+    document.getElementById("errorOnlyCharCategory").style.display = "block";
+
+  } else {
+    document.getElementById("errorEmpyNameCategory").style.display = "none"
+    nameIsCorrect = isUpperCase(nombre);
+    if (nameIsCorrect) {
+      document.getElementById("errorUpperNameCategory").style.display = "none"
+      nameIsCorrect = noEspecialChar(nombre);
+      if (nameIsCorrect) {
+        document.getElementById("errorOnlyCharCategory").style.display = "none"
+      } else {
+        document.getElementById("errorOnlyCharCategory").style.display = "block"
+      }
+    } else {
+      document.getElementById("errorUpperNameCategory").style.display = "block"
+    }
+  }
+
+  if (!descriptionIsCorrect) {
+    document.getElementById("errorEmpyDescCategory").style.display = "block";
+    document.getElementById("errorUpperDescCategory").style.display = "block";
+    document.getElementById("errorOnlyCharDescCategory").style.display = "block";
+
+  } else {
+    document.getElementById("errorEmpyDescCategory").style.display = "none"
+    descriptionIsCorrect = isUpperCase(descripcion);
+    if (descriptionIsCorrect) {
+      document.getElementById("errorUpperDescCategory").style.display = "none"
+      descriptionIsCorrectt = noEspecialChar(descripcion);
+      if (descriptionIsCorrect) {
+        document.getElementById("errorOnlyCharDescCategory").style.display = "none"
+      } else {
+        document.getElementById("errorOnlyCharDescCategory").style.display = "block"
+      }
+    } else {
+      document.getElementById("errorUpperDescCategory").style.display = "block"
+    }
+  }
+
+  if(nameIsCorrect && descriptionIsCorrect){
+    arr = {
+      id: id,
+      nombre: nombre,
+      descripcion: descripcion
+    }
+    categorias.push(arr);
+    getCategories();
+    handleCloseModalCategory();
+    console.log(categorias);
+  }
+
+}
+

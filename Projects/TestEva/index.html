@@ -180,7 +180,9 @@
           <div class="campo">
             <label for="nombreCategoria">Nombre Categoría:</label>
             <input type="text" id="nombreCategoria" placeholder="Ej: Ropa" />
-          <div class="error" id="errorNombreCategoria">......</div>
+            <p style="margin: 0; color: rgb(255, 69, 69)" id="errorEmpyNameCategory">* El nombre no puede quedar vacio</p>
+            <p style="margin: 0; color: rgb(255, 69, 69)" id="errorOnlyCharCategory">* Se permiten solo letras</p>
+            <p style="margin: 0; color: rgb(255, 69, 69)" id="errorUpperNameCategory">* La primera letra debe ser mayuscula</p>          
         </div>
 
         <div class="campo">
@@ -191,12 +193,14 @@
             maxlength="50"
             placeholder="Opcional"
           />
-          <div class="error" id="errorDescripcionCategoria">.......</div>
+          <p style="margin: 0; color: rgb(255, 69, 69)" id="errorEmpyDescCategory">* La descripcion no puede quedar vacio</p>
+          <p style="margin: 0; color: rgb(255, 69, 69)" id="errorOnlyCharDescCategory">* Se permiten solo letras</p>
+          <p style="margin: 0; color: rgb(255, 69, 69)" id="errorUpperDescCategory">* La primera letra debe ser mayuscula</p> 
         </div>
 
         <div class="campo">
           <button type="button" onclick="handleCloseModalCategory()">Cerrar</button>
-          <button type="button" onclick="agregarCategoria()">Añadir</button>
+          <button type="button" onclick="handleAddCategory()">Añadir</button>
         </div>
         </dialog>
           <h3>Categorías Registradas</h3>
