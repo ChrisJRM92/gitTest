@@ -8,7 +8,7 @@
     <script src="scripts.js"></script>
   </head>
 
-  <body onload="mostrarSeccion('seccion1'); cargarProductos(); getCategories();">
+  <body onload="mostrarSeccion('seccion1'); cargarProductos(); getCategories(); getCart();">
     <!-- Logos fijos a los lados -->
     <!-- <img src="./imagenes/logo.png" alt="Logo Izquierdo" id="logo-izquierdo" /> -->
     <!-- <img src="./imagenes/logo.png" alt="Logo Derecho" id="logo-derecho" /> -->
@@ -64,8 +64,8 @@
           <label for="">Stock</label>
           <input type="number" id="stockN" min="0" step="1" />
           <p style="margin: 0; color: rgb(255, 69, 69)" id="errorEmpyStock">* El stock no puede quedar vacio</p>
-          <button onclick="handleCloseModal()">Cerrar</button>
           <button onclick="saveNewProduct()">Guardar</button>
+          <button onclick="handleCloseModal()">Cerrar</button>
         </dialog>
 
         <dialog id="modalChangeData" closedby="any">
@@ -94,8 +94,8 @@
           <label for="">Stock</label>
           <input type="number" id="stock" min="0" step="1" />
           <p style="margin: 0; color: rgb(255, 69, 69)" id="errorEmpyStockEdit">* El stock no puede quedar vacio</p>
-          <button onclick="closeModalEdit()">Cerrar</button>
           <button onclick="saveDataModalProduct()">Guardar</button>
+          <button onclick="closeModalEdit()">Cerrar</button>
         </dialog>
 
         <dialog id="modalDeleteProduct" closedby="any">
@@ -137,8 +137,8 @@
             id="stockDP"
             disabled
           />
-          <button onclick="closeModaleDeleteProduct()">Cerrar</button>
           <button onclick="handleDeleteProduct()">Eliminar</button>
+          <button onclick="closeModaleDeleteProduct()">Cerrar</button>
         </dialog>
 
         <h3>Productos Registrados</h3>
@@ -199,11 +199,40 @@
         </div>
 
         <div class="campo">
-          <button type="button" onclick="handleCloseModalCategory()">Cerrar</button>
           <button type="button" onclick="handleAddCategory()">Añadir</button>
+          <button type="button" onclick="handleCloseModalCategory()">Cerrar</button>
         </div>
         </dialog>
-          <h3>Categorías Registradas</h3>
+
+        <dialog id="modalEditCategory" closedby="any">
+          <h3>Modificar categoria</h3>
+          <label for="">Id</label>
+          <input type="text" id="idCategoryEdit" disabled>
+          <label for="">Nombre</label>
+          <input type="text" id="nameCategoryEdit">
+          <p style="margin: 0; color: rgb(255, 69, 69)" id="errorEmpyNameCategorySection">* El nombre no puede quedar vacio</p>
+          <p style="margin: 0; color: rgb(255, 69, 69)" id="errorOnlyCharCategorySection">* Se permiten solo letras</p>
+          <p style="margin: 0; color: rgb(255, 69, 69)" id="errorUpperNameCategorySection">* La primera letra debe ser mayuscula</p>
+          <label for="">Descripcion</label>
+          <input type="text" id="descriptionCategoryEdit">
+          <p style="margin: 0; color: rgb(255, 69, 69)" id="errorEmpyDescCategorySection">* El nombre no puede quedar vacio</p>
+          <p style="margin: 0; color: rgb(255, 69, 69)" id="errorOnlyCharDescCategorySection">* Se permiten solo letras</p>
+          <p style="margin: 0; color: rgb(255, 69, 69)" id="errorUpperNameDescCategorySection">* La primera letra debe ser mayuscula</p>
+          <button onclick="handleSaveDataCategory()">Guardar</button>
+          <button onclick="handleCloseModalEditCategory()">Cerrar</button>
+        </dialog>
+
+        <dialog style="width: 300px;" id="modalDeleteCategory" closedby="any">
+          <h3>Modificar categoria</h3>
+          <p>¿Deseas eliminar esta caegoria?</p>
+          <input type="text" id="idCategoryDelete" disabled>
+          <input type="text" id="nameCategoryDelete" disabled>
+          <input type="text" id="descriptionCategoryDelete" disabled>
+          <button onclick="handleDeleteCategory()" >Eliminar</button>
+          <button onclick="handleCloseModalDeleteCategory()">Cerrar</button>
+        </dialog>
+        
+        <h3>Categorías Registradas</h3>
 
         <ul id="listaCategorias">
           <table>
@@ -225,27 +254,49 @@
     <!-- Sección 3: Carrito de compras -->
     <div id="seccion3" class="seccion" style="display: none">
       <div class="contenido-seccion">
-        <h2>Carrito de Compras (Reto Grupal)</h2>
-        <p>
-          Añadir productos al carrito desde la lista de productos disponibles.
-        </p>
-        <div id="productosDisponibles">
-          <!-- Productos para añadir -->
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h2>Carrito de compras</h2>
+          <button style="width: 150px; height: 40px;" onclick="handleOpenModalCartAddProduct()">Añadir productos</button>
         </div>
 
+        <dialog id="modalAddNewBuy" closedby="any">
+          <h3>Agregar artículos al carrito</h3>
+          <p>Productos disponibles</p>
+          <table>
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Carrito</th>
+              </tr>
+              </thead>
+            <tbody id="itemsProductAvailable">
+              
+            </tbody>
+          </table>
+        </dialog>
+        
         <h3>Resumen del Carrito</h3>
         <table id="tablaCarrito">
           <thead>
             <tr>
+              <th>id</th>
               <th>Producto</th>
               <th>Cantidad</th>
+              <th>P. Unitario</th>
               <th>Subtotal</th>
+              <th>Acciones</th>
             </tr>
           </thead>
-          <tbody>
-            <!-- Carrito aparecerá aquí -->
+          <tbody id="dataBodyCart">
+            
           </tbody>
         </table>
+        <p>Subtotal: $<span id="SubtotalCarrito">0.00</span></p>
+        <p>Iva: <span id="iva">12</span>%</p>
         <p>Total: $<span id="totalCarrito">0.00</span></p>
       </div>
     </div>

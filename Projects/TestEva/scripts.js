@@ -1,6 +1,9 @@
 // Lista base de productos
 let globalIdProducts = 0;
 let productSelected = 0;
+let categorySelected = 0;
+let itemCartSelected = 0;
+let additemCartSelected = 0;
 
 let productos = [
   {
@@ -30,14 +33,14 @@ let productos = [
 ];
 
 
-const categorias = [
+let categorias = [
   { id: 1, nombre: "Ropa", descripcion: "Prendas de vestir" },
   { id: 2, nombre: "Calzado", descripcion: "Zapatos, sandalias y más" },
 ];
 
-const carrito = [
-  { nombre: "Camisa", cantidad: 2, precio: 25.99 },
-  { nombre: "Zapatos", cantidad: 1, precio: 60.5 },
+let carrito = [
+  { id: 1, nombre: "Camisa", cantidad: 2, precioUnitario: 25.99, subtotal: 51.98},
+  { id: 2, nombre: "Zapatos", cantidad: 1, precioUnitario: 60.5, subtotal:  60.5},
 ];
 
 const ventas = [
@@ -115,7 +118,6 @@ const totalBodega = () => {
   document.getElementById("stockTotal").innerText = totalStock;
   document.getElementById("valorInventario").innerText = valorTotalInventario;
 }
-//------------------------------------------
 
 //-----------------Modal crear producto------
 const handleOpenModalProduct = () => {
@@ -252,7 +254,6 @@ const handleCloseModal = () => {
   document.getElementById("precioN").value = "";
   document.getElementById("stockN").value = "";
 }
-//-------------------------------------------
 
 
 //----------Modal actualizar productos------
@@ -380,7 +381,6 @@ const saveDataModalProduct = () => {
   }
 
 }
-//-------------------------------------------
 
 
 //------------Modal eliminar producto--------
@@ -406,7 +406,6 @@ const handleDeleteProduct = () => {
 const closeModaleDeleteProduct = () => {
   document.getElementById("modalDeleteProduct").close();
 }
-//-------------------------------------------
 
 
 //----------Funciones reutilizables----------
@@ -443,7 +442,6 @@ const noEspecialChar = (value) => {
   }
   return isCorrect;
 }
-//------------------------------------------
 
 //*****************************************************************
 //------------Nueva categoria ---------------
@@ -463,7 +461,6 @@ const handleCloseModalCategory = () => {
   document.getElementById("descripcionCategoria").value = "";
 
 }
-//-------------------------------------------
 
 //-------------Listar categorias-------------
 const getCategories = () => {
@@ -473,8 +470,8 @@ const getCategories = () => {
       <td>${c.nombre}</td>
       <td>${c.descripcion}</td>
       <td style="display: flex; gap: 5px; justify-content: center;">
-        <button style="width: 100px;" onclick=''>Editar</button>
-        <button style="width: 100px;" onclick=''>Eliminar</button>
+        <button style="width: 100px;" onclick='openModalEditCategory(${JSON.stringify(c)})'>Editar</button>
+        <button style="width: 100px;" onclick='openModalDeleteCategory(${JSON.stringify(c)})'>Eliminar</button>
       </td>
     </tr>
     `).join(" ")
@@ -552,3 +549,209 @@ const handleAddCategory = () => {
 
 }
 
+// ------------Editar Categoria------------
+const openModalEditCategory = (category) =>{
+  document.getElementById("errorEmpyNameCategorySection").style.display = "none";
+  document.getElementById("errorOnlyCharCategorySection").style.display = "none";
+  document.getElementById("errorUpperNameCategorySection").style.display = "none";
+
+  document.getElementById("errorEmpyDescCategorySection").style.display = "none";
+  document.getElementById("errorOnlyCharDescCategorySection").style.display = "none";
+  document.getElementById("errorUpperNameDescCategorySection").style.display = "none";
+
+
+  document.getElementById("modalEditCategory").showModal();
+  document.getElementById("idCategoryEdit").value = category.id
+  document.getElementById("nameCategoryEdit").value = category.nombre;
+  document.getElementById("descriptionCategoryEdit").value = category.descripcion;
+  categorySelected = category.id;
+}
+const handleCloseModalEditCategory = () =>{
+  document.getElementById("modalEditCategory").close()
+}
+
+const handleSaveDataCategory = () =>{
+  console.log(categorySelected)
+  let nameIsCorrect = false;
+  let descriptionIsCorrect = false
+
+  const nombre = document.getElementById("nameCategoryEdit").value;
+  const descripcion = document.getElementById("descriptionCategoryEdit").value;
+
+  nameIsCorrect = existValue(nombre);
+  descriptionIsCorrect = existValue(descripcion);
+
+   //Validacion nombre
+  if (!nameIsCorrect) {
+    console.log(nameIsCorrect)
+    document.getElementById("errorEmpyNameCategorySection").style.display = "block";
+    document.getElementById("errorOnlyCharCategorySection").style.display = "block";
+    document.getElementById("errorUpperNameCategorySection").style.display = "block";
+
+  } else {
+    document.getElementById("errorEmpyNameCategorySection").style.display = "none"
+    nameIsCorrect = isUpperCase(nombre);
+    if (nameIsCorrect) {
+      document.getElementById("errorUpperNameCategorySection").style.display = "none"
+      nameIsCorrect = noEspecialChar(nombre);
+      if (nameIsCorrect) {
+        document.getElementById("errorOnlyCharCategorySection").style.display = "none"
+      } else {
+        document.getElementById("errorOnlyCharCategorySection").style.display = "block"
+      }
+    } else {
+      document.getElementById("errorUpperNameCategorySection").style.display = "block"
+    }
+  }
+
+
+  //Validacion descripcion
+  if (!descriptionIsCorrect) {
+    document.getElementById("errorEmpyDescCategorySection").style.display = "block";
+    document.getElementById("errorOnlyCharDescCategorySection").style.display = "block";
+    document.getElementById("errorUpperNameDescCategorySection").style.display = "block";
+
+  } else {
+    document.getElementById("errorEmpyDescCategorySection").style.display = "none"
+    descriptionIsCorrect = isUpperCase(nombre);
+    if (descriptionIsCorrect) {
+      document.getElementById("errorUpperNameDescCategorySection").style.display = "none"
+      descriptionIsCorrect = noEspecialChar(nombre);
+      if (descriptionIsCorrect) {
+        document.getElementById("errorOnlyCharDescCategorySection").style.display = "none"
+      } else {
+        document.getElementById("errorOnlyCharDescCategorySection").style.display = "block"
+      }
+    } else {
+      document.getElementById("errorUpperNameDescCategorySection").style.display = "block"
+    }
+  }
+
+
+  if (nameIsCorrect && descriptionIsCorrect) {
+    console.log("Se ejecuto?")
+    for (let i = 0; i < categorias.length; i++) {
+      if (categorias[i].id == categorySelected) {
+        console.log("Encontrado")
+        categorias[i].nombre = document.getElementById("nameCategoryEdit").value;
+        categorias[i].descripcion = document.getElementById("descriptionCategoryEdit").value;
+        getCategories();
+        handleCloseModalEditCategory()
+        break
+      }
+    }
+  }
+  console.log(nameIsCorrect, descriptionIsCorrect);
+  console.log(nombre, descripcion);
+}
+//-------------Eliminar categoria-----------
+const openModalDeleteCategory = (category) =>{
+  console.log(category);
+  document.getElementById("modalDeleteCategory").showModal();
+  document.getElementById("idCategoryDelete").value = category.id;
+  document.getElementById("nameCategoryDelete").value = category.nombre;
+  document.getElementById("descriptionCategoryDelete").value = category.descripcion;
+  categorySelected = category.id;
+}
+const handleCloseModalDeleteCategory = () =>{
+  document.getElementById("modalDeleteCategory").close();
+}
+const handleDeleteCategory = () =>{
+  const newDataCategory = categorias.filter(c => c.id!=categorySelected);
+  categorias = newDataCategory;
+  getCategories();
+  handleCloseModalDeleteCategory();
+}
+
+//********************************************************* */
+//-----------Listar carrito--------------
+const getCart = () =>{
+  document.getElementById("dataBodyCart").innerHTML = carrito.map(item => `
+      <tr>
+          <td>${item.id}</td>
+          <td>${item.nombre}</td>
+          <td>${item.cantidad}</td>
+          <td>${item.precioUnitario}</td>
+          <td>${calcSubtotalItem(item.cantidad, item.precioUnitario)}</td>
+          <td>
+            <button onclick='deleteItemCart(${JSON.stringify(item)})'>Eliminar</button>
+          </td>
+          
+      </tr>
+    `).join(" ");
+    calcSubTotalBuy();
+}
+
+const handleOpenModalCartAddProduct = () =>{
+  document.getElementById("modalAddNewBuy").showModal();
+  document.getElementById("itemsProductAvailable").innerHTML = productos.map(item => `
+    <tr>
+        <td>${item.id}</td>
+        <td>${item.nombre}</td>
+        <td>${item.descripcion}</td>
+        <td>${item.precio}</td>
+          <td>
+            <input id='amount${item.id}' type="number" min="0" max="100" step="1" value='${setAmountItemInput(item.id)}'>
+          </td>
+        <td>
+            <button onClick='addProductToCart(${JSON.stringify(item)})'>Añadir</button>
+        </td>
+    </tr>
+    
+    
+    `).join(" ")
+  
+}
+
+const setAmountItemInput = (id) =>{
+  const found = carrito.find(item => item.id === id);
+  return found ? found.cantidad : 0;
+}
+
+const addProductToCart = (item) =>{
+  additemCartSelected = item.id;
+  let amountItem = parseInt(document.getElementById(`amount${additemCartSelected}`).value);
+  console.log(additemCartSelected);
+
+  if(amountItem){
+    for(let i=0; i<carrito.length; i++){
+      if(carrito[i].id == additemCartSelected){
+        console.log("Encontrado");
+        carrito[i].cantidad = amountItem;
+        break;
+      }else{
+        carrito.push({ ...item, cantidad: amountItem  }); //Corregir
+        break;
+      }
+    }
+  }
+  getCart();
+  console.log(item);
+}
+
+const deleteItemCart = (item) =>{
+  itemCartSelected = item.id
+  const newCart = carrito.filter(item => item.id != itemCartSelected);
+  carrito = newCart;
+  getCart()
+}
+
+const calcSubtotalItem = (cantidad, precio) =>{
+  return (parseInt(cantidad)*parseFloat(precio).toFixed(2))
+}
+
+const calcSubTotalBuy = ()=>{
+  let subtotalCart = 0;
+  for(let i=0; i<carrito.length; i++){
+    subtotalCart += parseFloat(carrito[i].subtotal)
+  }
+
+  document.getElementById("SubtotalCarrito").innerText = subtotalCart.toFixed(2);
+  calcTotalCart(subtotalCart);
+}
+
+const calcTotalCart = (subtotalCart) =>{
+  const iva = parseInt(document.getElementById("iva").innerText);
+  const total = (iva*subtotalCart/100)+subtotalCart;
+  document.getElementById("totalCarrito").innerText = total.toFixed(2);
+}
